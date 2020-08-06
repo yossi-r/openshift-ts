@@ -1,0 +1,4 @@
+grafana_port: "80"
+grafana_base_url: "http://grafana.cisroutes.dc1.example.com"
+grafana_username: "admin"
+grafana_password: "admin"

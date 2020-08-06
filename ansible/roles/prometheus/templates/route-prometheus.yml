@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  host: prometheus.cisroutes.dc1.example.com
+  path: /
+  to:
+    kind: Service
+    name: prometheus-service
+  port:
+    targetPort: 8080

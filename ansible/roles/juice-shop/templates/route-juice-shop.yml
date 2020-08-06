@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: juice-shop
+  namespace: default
+spec:
+  host: juice-shop.cisroutes.dc1.example.com
+  path: /
+  to:
+    kind: Service
+    name: juice-shop
+  port:
+    targetPort: 8080

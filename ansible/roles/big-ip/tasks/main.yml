@@ -1,0 +1,24 @@
+---
+
+- name: Download and Install f5 automation toolchain tools 
+  import_tasks: install-f5-atc.yml
+
+- name: Deploy AS3 and TS declaration on the BIG-IP using role
+  include_role:
+    name: f5devcentral.atc_deploy
+  vars:
+    atc_method: POST
+    atc_declaration: "{{ lookup('template', item.file) }}"
+    atc_delay: 10
+    atc_retries: 15
+    atc_service: "{{item.service}}"
+    f5app_services_package_server: "{{ provider.server }}"
+    f5app_services_package_server_port: "{{ provider.server_port }}"
+    f5app_services_package_user: "{{ provider.user }}"
+    f5app_services_package_password: "{{ provider.password }}"
+    f5app_services_package_validate_certs: "{{ provider.validate_certs }}"
+    f5app_services_package_transport: "{{ provider.transport }}"
+  loop:
+  - {service: "AS3", file: "{{ role_path }}/templates/{{ as3_ts_dependencies_template }}"}
+  - {service: "Telemetry", file: "{{ role_path }}/templates/{{ ts_template }}"}
+  

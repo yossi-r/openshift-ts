@@ -1,0 +1,15 @@
+
+- name: Create a Deployment by reading the definition from a local file
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '{{ role_path }}/templates/deployment-juice-shop.yml') }}"
+
+- name: Create a Service object by reading the definition from a file
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '{{ role_path }}/templates/service-juice-shop.yml') }}"
+
+- name: Create a route object by reading the definition from a file
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '{{ role_path }}/templates/route-juice-shop.yml') }}"

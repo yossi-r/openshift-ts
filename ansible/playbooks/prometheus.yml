@@ -1,0 +1,7 @@
+---
+# file: servers.yml
+- hosts: localhost
+  vars:
+    state: "present"
+  roles:
+    - prometheus

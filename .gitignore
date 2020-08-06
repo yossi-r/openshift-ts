@@ -1,0 +1,15 @@
+*.pyc
+ansible/roles/ansible-netplan
+ansible/roles/big-ip/files/tmp/
+ansible/roles/f5devcentral.atc_deploy
+ansible/roles/f5devcentral.f5app_services_package
+
+*.lock
+output.har
+
+# ignore downloaded packages
+*.deb
+*.rpm
+
+# ignore OSX hidden files
+.DS_Store

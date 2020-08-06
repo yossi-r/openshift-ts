@@ -1,0 +1,51 @@
+---
+
+#  - name: Get latest AS3 RPM name
+#    action: shell wget -O - {{as3_uri}} | grep -E rpm | head -1 | cut -d "/" -f 7 | cut -d "=" -f 1 |  cut -d "\"" -f 1
+#    register: as3_output
+#
+#  - debug:
+#     var: as3_output.stdout_lines[0]
+#
+#  - set_fact:
+#     as3_release: "{{as3_output.stdout_lines[0]}}"
+#
+#  - name: Get latest AS3 RPM tag
+#    action: shell wget -O - {{as3_uri}} | grep -E rpm | head -1 | cut -d "/" -f 6
+#    register: as3_output
+#
+#  - debug:
+#     var: as3_output.stdout_lines[0]
+#
+#  - set_fact:
+#     as3_release_tag: "{{as3_output.stdout_lines[0]}}"
+
+  - name: Get latest TS RPM name
+    action: shell wget -O - {{ts_uri}} | grep -E rpm | head -1 | cut -d "/" -f 7 | cut -d "=" -f 1 |  cut -d "\"" -f 1
+    register: ts_output
+
+  - debug:
+     var: ts_output.stdout_lines[0]
+
+  - set_fact:
+     ts_release: "{{ts_output.stdout_lines[0]}}"
+
+  - name: Get latest TS RPM tag
+    action: shell wget -O - {{ts_uri}} | grep -E rpm | head -1 | cut -d "/" -f 6
+    register: ts_output
+
+  - debug:
+     var: ts_output.stdout_lines[0]
+
+  - set_fact:
+     ts_release_tag: "{{ts_output.stdout_lines[0]}}"
+
+  - name: Download and Install AS3 and TS RPM  ackages to BIG-IP using role
+    include_role:
+      name: f5devcentral.f5app_services_package
+    vars:
+      f5app_services_package_url: "{{item.uri}}/download/{{item.release_tag}}/{{item.release}}?raw=true"
+      f5app_services_package_path: "/tmp/{{item.release}}"
+    loop:
+    - {uri: "{{as3_uri}}", release_tag: "{{as3_release_tag}}", release: "{{as3_release}}"}
+    - {uri: "{{ts_uri}}", release_tag: "{{ts_release_tag}}", release: "{{ts_release}}"}
